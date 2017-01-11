@@ -1,6 +1,12 @@
 # zhihu-daily-desktop
 > zhihu-daily, desktop version
 
+## Tech Stack
+
+- **Vuejs 2.x**
+- **Electron**
+- **Vuex**
+
 ## Reference
 
 - [Ramme](https://github.com/terkelg/ramme) - Unofficial Instagram Desktop App
