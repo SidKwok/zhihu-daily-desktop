@@ -1,0 +1,2 @@
+export const FETCH_SLIDES = 'FETCH_SLIDES';
+export const FETCH_STORIES = 'FETCH_STORIES';

@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <router-view></router-view>
-  </div>
+    <div class="main">
+        <router-view></router-view>
+    </div>
 </template>
 
 <script>
-import store from 'src/vuex/store';
+import store from 'state/store';
 
 export default {
     store
@@ -13,28 +13,26 @@ export default {
 </script>
 
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Lato:300);
+    * {
+        margin: 0;
+        padding: 0;
+    }
 
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  html,
-  body { height: 100%; }
-
-  body {
-    align-items: center;
-    background:
-      radial-gradient(
-        ellipse at center,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(229, 229, 229, .85) 100%
-      );
-    background-position: center;
-    display: flex;
-    font-family: Lato, Helvetica, sans-serif;
-    justify-content: center;
-    text-align: center;
-  }
+    html,
+    body,
+    .main { height: 100%; }
+/*
+    body {
+        align-items: center;
+        background:
+            radial-gradient(
+                ellipse at center,
+                rgba(255, 255, 255, 1) 0%,
+                rgba(229, 229, 229, .85) 100%
+            );
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+  }*/
 </style>

@@ -1,59 +1,67 @@
 'use strict'
 
-const electron = require('electron')
-const path = require('path')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
+const electron = require('electron');
+const path = require('path');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const initApis = require('./apis');
 
-let mainWindow
-let config = {}
+initApis(electron);
+
+let mainWindow;
+let config = {};
 
 if (process.env.NODE_ENV === 'development') {
-  config = require('../config')
-  config.url = `http://localhost:${config.port}`
+    config = require('../config');
+    config.url = `http://localhost:${config.port}`;
 } else {
-  config.devtron = false
-  config.url = `file://${__dirname}/dist/index.html`
+    config.devtron = false;
+    config.url = `file://${__dirname}/dist/index.html`;
 }
 
 function createWindow () {
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800
-  })
+    /**
+     * Initial window options
+     */
+    mainWindow = new BrowserWindow({
+        height: 700,
+        maxHeight: 720,
+        minHeight: 400,
+        width: 414,
+        maxWidth: 500,
+        minWidth: 400,
+        titleBarStyle: 'hidden-inset'
+    });
 
-  mainWindow.loadURL(config.url)
+    mainWindow.loadURL(config.url);
 
-  if (process.env.NODE_ENV === 'development') {
-    BrowserWindow.addDevToolsExtension(path.join(__dirname, '../node_modules/devtron'))
+    if (process.env.NODE_ENV === 'development') {
+        BrowserWindow.addDevToolsExtension(path.join(__dirname, '../node_modules/devtron'));
 
-    let installExtension = require('electron-devtools-installer')
+        let installExtension = require('electron-devtools-installer');
 
-    installExtension.default(installExtension.VUEJS_DEVTOOLS)
-      .then((name) => mainWindow.webContents.openDevTools())
-      .catch((err) => console.log('An error occurred: ', err))
-  }
+        installExtension.default(installExtension.VUEJS_DEVTOOLS)
+            .then((name) => mainWindow.webContents.openDevTools())
+            .catch((err) => console.log('An error occurred: ', err));
+    }
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    })
 
-  console.log('mainWindow opened')
+    console.log('mainWindow opened');
 }
 
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
 })
 
 app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow()
-  }
+    if (mainWindow === null) {
+        createWindow();
+    }
 })

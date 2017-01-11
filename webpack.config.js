@@ -74,7 +74,9 @@ let config = {
   resolve: {
     alias: {
       'components': path.join(__dirname, 'app/src/components'),
-      'src': path.join(__dirname, 'app/src')
+      'src': path.join(__dirname, 'app/src'),
+      'views': path.join(__dirname, 'app/src/views'),
+      'state': path.join(__dirname, 'app/src/state'),
     },
     extensions: ['', '.js', '.vue', '.json', '.css'],
     fallback: [path.join(__dirname, 'app/node_modules')]
