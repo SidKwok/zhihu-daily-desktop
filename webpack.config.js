@@ -77,6 +77,7 @@ let config = {
       'src': path.join(__dirname, 'app/src'),
       'views': path.join(__dirname, 'app/src/views'),
       'state': path.join(__dirname, 'app/src/state'),
+      'utils': path.join(__dirname, 'app/src/utils.js')
     },
     extensions: ['', '.js', '.vue', '.json', '.css'],
     fallback: [path.join(__dirname, 'app/node_modules')]

@@ -6,7 +6,7 @@ const state = {
 
 const mutations = {
     [types.FETCH_SLIDES](state, payload) {
-        state.main = payload.top_stories;
+        state.main = payload.stories;
     }
 };
 

@@ -5,8 +5,8 @@ const state = {
 };
 
 const mutations = {
-    [types.FETCH_STORIES](state, stories) {
-        state.main.push(stories);
+    [types.FETCH_STORIES](state, payload) {
+        state.main.push(payload);
     }
 };
 

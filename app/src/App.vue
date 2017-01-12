@@ -21,6 +21,11 @@ export default {
     html,
     body,
     .main { height: 100%; }
+
+    html {
+        font-family: "PingFang SC","Microsoft Yahei",Arial,sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
 /*
     body {
         align-items: center;
