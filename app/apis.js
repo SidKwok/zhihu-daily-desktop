@@ -57,6 +57,56 @@ module.exports = function ({ipcMain}) {
             });
     });
 
+    ipcMain.on('updateNewest', event => {
+        axios.get('/4/news/latest')
+            .then(({data}) => {
+                let slides = data.top_stories
+                let stories = data.stories;
+                let slidesPromises = slides.map((story, index)=> {
+                    let imgUrl = story.image;
+                    return new Promise(resolve => {
+                        http.get(imgUrl, res => {
+                            let imgData = '';
+                            res.setEncoding('base64')
+                            .on('data', chunk => {
+                                imgData += chunk;
+                            })
+                            .on('end', () => {
+                                story.image = 'data:image/jpg;base64,' + imgData;
+                                resolve(story);
+                            });
+                        });
+                    });
+                });
+                let storiesPromises = stories.map((story, index)=> {
+                    let imgUrl = story.images[0];
+                    return new Promise(resolve => {
+                        http.get(imgUrl, res => {
+                            let imgData = '';
+                            res.setEncoding('base64')
+                            .on('data', chunk => {
+                                imgData += chunk;
+                            })
+                            .on('end', () => {
+                                story.images = 'data:image/jpg;base64,' + imgData;
+                                resolve(story);
+                            });
+                        });
+                    });
+                });
+                return Promise.all([
+                    Promise.all(slidesPromises),
+                    Promise.all(storiesPromises)
+                ]);
+            })
+            .then(pack => {
+                event.sender.send('getNewest', {
+                    slides: pack[0],
+                    stories: pack[1]
+                });
+            });
+    });
+
     ipcMain.on('cache', (event) => {
         const urls = [ 'http://pic3.zhimg.com/a2b5093857178de3c7d24bd898455b3a.jpg',
                     'http://pic2.zhimg.com/c627316d9cdcafcfd941733571840681.jpg',

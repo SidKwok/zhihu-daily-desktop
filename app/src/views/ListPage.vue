@@ -8,6 +8,8 @@
             :date="container.date">
             <list-item
                 v-for="item of container.stories"
+                :title="item.title"
+                :img="item.images"
              />
         </list-container>
     </div>
@@ -33,15 +35,22 @@ export default {
     },
     methods: {
         ...mapActions([
+            'startLoading',
+            'doneLoading',
             'fetchSlides',
             'fetchStories'
         ])
     },
     created() {
         let today = formatStoriesDate(new Date());
-        this.fetchSlides();
-        this.fetchStories(today);
-        this.fetchStories(today);
+        this.startLoading();
+        Promise.all([
+            this.fetchSlides(),
+            this.fetchStories(today)
+        ])
+        .then(() => {
+            this.doneLoading();
+        });
     }
 };
 </script>

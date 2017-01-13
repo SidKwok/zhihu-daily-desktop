@@ -1,5 +1,6 @@
 <template lang="html">
-    <div class="list-container">
+    <div class="list-container"
+        :data-date="hasHeader ? title : '0'">
         <p class="header" v-if="hasHeader">
             {{title}}
         </p>

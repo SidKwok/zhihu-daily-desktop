@@ -7,6 +7,9 @@ const state = {
 const mutations = {
     [types.FETCH_STORIES](state, payload) {
         state.main.push(payload);
+    },
+    [types.UPDATE_TODAY](state, {stories}) {
+        state.main[0] = stories;
     }
 };
 
