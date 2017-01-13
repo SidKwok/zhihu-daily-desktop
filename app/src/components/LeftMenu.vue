@@ -2,9 +2,10 @@
     <div class="left-menu">
         <div class="win-panel"></div>
         <div class="back-tab">
-            <svg t="1484131196944" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2503" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32">
+            <svg @click="fallBack"
+                t="1484131196944" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2503" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32">
                 <path d="M732.509803 1009.849857l10.397732-23.118774L312.342825 513.260671 742.907535 45.550559 732.509803 16.672507 281.090423 513.260671 732.509803 1009.849857z" p-id="2504"
-                    fill="#262626"></path>
+                    :fill="isListPage ? '#ddd' : '#262626'"></path>
             </svg>
         </div>
         <div class="refresh-tab">
@@ -30,7 +31,10 @@ import {mapGetters, mapActions} from 'vuex';
 export default {
     name: 'left-menu',
     computed: {
-        ...mapGetters(['isLoading'])
+        ...mapGetters(['isLoading']),
+        isListPage() {
+            return this.$route.name === 'list-page';
+        }
     },
     methods: {
         ...mapActions([
@@ -44,6 +48,11 @@ export default {
                 .then(() => {
                     this.doneLoading();
                 });
+        },
+        fallBack() {
+            if (!this.isListPage) {
+                this.$router.push({name: 'list-page'});
+            }
         },
         test() {
             if (this.isLoading) {
@@ -102,6 +111,10 @@ export default {
             to {
                 transform: rotate(360deg);
             }
+        }
+
+        svg {
+            cursor: pointer;
         }
 
     }

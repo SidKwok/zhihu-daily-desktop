@@ -1,5 +1,6 @@
 import HomePage from 'views/HomePage';
 import ListPage from 'views/ListPage';
+import ArticlePage from 'views/ArticlePage';
 
 export default [
     {
@@ -9,9 +10,14 @@ export default [
         component: HomePage,
         children: [
             {
-                name: 'LIST',
+                name: 'list-page',
                 path: 'list',
                 component: ListPage
+            },
+            {
+                name: 'article-page',
+                path: 'article/:id',
+                component: ArticlePage
             }
         ]
     },

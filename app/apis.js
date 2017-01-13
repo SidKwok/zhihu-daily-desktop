@@ -2,27 +2,37 @@ const axios = require('axios');
 const http = require('http');
 axios.defaults.baseURL = 'http://news-at.zhihu.com/api';
 
+/**
+ * transform url to base64 and send the image request
+ * @param {Array} data, from zhihu source
+ * @param {string} key, key of the url
+ * @return {Array} every key should be a Promise
+ */
+function url2Base64 (data, key) {
+    return data.map((e, i) => {
+        let imgUrl = e[key] instanceof Array ? e[key][0] : e[key];
+        return new Promise(resolve => {
+            http.get(imgUrl, res => {
+                let imgData = '';
+                res.setEncoding('base64')
+                    .on('data', chunk => {
+                        imgData += chunk;
+                    })
+                    .on('end', () => {
+                        e[key] = `data:image/jpg;base64,${imgData}`
+                        resolve(e);
+                    });
+            });
+        });
+    });
+}
+
 module.exports = function ({ipcMain}) {
     ipcMain.on('fetchSlides', event => {
         axios.get('/4/news/latest')
             .then(({data}) => {
                 let stories = data.top_stories
-                let imgPromises = stories.map((story, index)=> {
-                    let imgUrl = story.image;
-                    return new Promise(resolve => {
-                        http.get(imgUrl, res => {
-                            let imgData = '';
-                            res.setEncoding('base64')
-                            .on('data', chunk => {
-                                imgData += chunk;
-                            })
-                            .on('end', () => {
-                                story.image = 'data:image/jpg;base64,' + imgData;
-                                resolve(story);
-                            });
-                        });
-                    });
-                });
+                let imgPromises = url2Base64(stories, 'image');
                 return Promise.all(imgPromises);
             })
             .then(stories => {
@@ -34,22 +44,7 @@ module.exports = function ({ipcMain}) {
         axios.get(`/4/news/before/${date}`)
             .then(({data}) => {
                 let stories = data.stories
-                let imgPromises = stories.map((story, index)=> {
-                    let imgUrl = story.images[0];
-                    return new Promise(resolve => {
-                        http.get(imgUrl, res => {
-                            let imgData = '';
-                            res.setEncoding('base64')
-                            .on('data', chunk => {
-                                imgData += chunk;
-                            })
-                            .on('end', () => {
-                                story.images = 'data:image/jpg;base64,' + imgData;
-                                resolve(story);
-                            });
-                        });
-                    });
-                });
+                let imgPromises = url2Base64(stories, 'images');
                 return Promise.all(imgPromises);
             })
             .then(stories => {
@@ -62,38 +57,8 @@ module.exports = function ({ipcMain}) {
             .then(({data}) => {
                 let slides = data.top_stories
                 let stories = data.stories;
-                let slidesPromises = slides.map((story, index)=> {
-                    let imgUrl = story.image;
-                    return new Promise(resolve => {
-                        http.get(imgUrl, res => {
-                            let imgData = '';
-                            res.setEncoding('base64')
-                            .on('data', chunk => {
-                                imgData += chunk;
-                            })
-                            .on('end', () => {
-                                story.image = 'data:image/jpg;base64,' + imgData;
-                                resolve(story);
-                            });
-                        });
-                    });
-                });
-                let storiesPromises = stories.map((story, index)=> {
-                    let imgUrl = story.images[0];
-                    return new Promise(resolve => {
-                        http.get(imgUrl, res => {
-                            let imgData = '';
-                            res.setEncoding('base64')
-                            .on('data', chunk => {
-                                imgData += chunk;
-                            })
-                            .on('end', () => {
-                                story.images = 'data:image/jpg;base64,' + imgData;
-                                resolve(story);
-                            });
-                        });
-                    });
-                });
+                let slidesPromises = url2Base64(slides, 'image');
+                let storiesPromises = url2Base64(stories, 'images');
                 return Promise.all([
                     Promise.all(slidesPromises),
                     Promise.all(storiesPromises)

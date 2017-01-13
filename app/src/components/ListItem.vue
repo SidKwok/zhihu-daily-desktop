@@ -1,9 +1,11 @@
 <template lang="html">
-    <div class="list-item">
+    <router-link tag="div"
+        class="list-item"
+        :to="{name: 'article-page', params: {id: id}}">
         <p>{{title}}</p>
         <div class="img-box"
             :style="backgroundStyle"></div>
-    </div>
+    </router-link>
 </template>
 
 <script>
@@ -17,6 +19,9 @@ export default {
         img: {
             type: String,
             default: ''
+        },
+        id: {
+            required: true
         }
     },
     computed: {
@@ -37,6 +42,7 @@ export default {
         border-bottom: 1px solid #ddd;
         position: relative;
         padding: 12px 8px;
+        cursor: pointer;
         p {
             font-size: 16px;
             color: #444;

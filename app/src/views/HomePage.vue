@@ -2,7 +2,10 @@
     <div class="app">
         <left-menu />
         <div class="page">
-            <router-view />
+            <keep-alive>
+                <router-view />
+            </keep-alive>
+            <!-- <router-view /> -->
         </div>
     </div>
 </template>
