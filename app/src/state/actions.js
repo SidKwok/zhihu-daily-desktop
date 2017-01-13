@@ -32,7 +32,6 @@ export const fetchStories = ({commit}, date) => {
 export const updateNewest = ({commit}) => {
     return new Promise(resolve => {
         ipcRenderer.once('getNewest', (event, {slides, stories}) => {
-            console.log(slides);
             commit(types.UPDATE_SLIDES, {slides});
             commit(types.UPDATE_TODAY, {stories});
             resolve();
