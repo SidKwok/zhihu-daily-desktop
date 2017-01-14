@@ -73,6 +73,7 @@ export default {
         height: 100%;
         background-color: #fafafa;
         border-right: @split-line;
+        z-index: 999;
 
         -webkit-user-select: none;
         -webkit-app-region: drag;

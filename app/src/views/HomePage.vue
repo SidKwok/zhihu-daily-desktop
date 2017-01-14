@@ -2,9 +2,11 @@
     <div class="app">
         <left-menu />
         <div class="page">
-            <keep-alive>
-                <router-view />
-            </keep-alive>
+            <transition :name="'slide-left'" mode="out-in">
+                <keep-alive>
+                    <router-view />
+                </keep-alive>
+            </transition>
             <!-- <router-view /> -->
         </div>
     </div>
@@ -16,6 +18,12 @@ export default {
     name: 'home-page',
     components: {
         LeftMenu
+    },
+    computed: {
+        transitionType() {
+            const isListPage = this.$route.name === 'list-page';
+            return isListPage ? 'slide-right' : 'slide-left';
+        }
     }
 };
 </script>
@@ -28,4 +36,21 @@ export default {
         height: 100%;
         margin-left: 80px;
     }
+    /*.slide-left-enter-active,
+    .slide-left-leave-active {
+        transition: transform .3s;
+    }
+    .slide-left-enter,
+    .slide-left-leave-active {
+        transform: translateX(-100%);
+    }
+
+    .slide-right-enter-active,
+    .slide-right-leave-active {
+        transition: transform .3s;
+    }
+    .slide-right-enter,
+    .slide-right-leave-active {
+        transform: translateX(100%);
+    }*/
 </style>
