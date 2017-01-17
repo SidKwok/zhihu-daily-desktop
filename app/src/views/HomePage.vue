@@ -1,5 +1,5 @@
 <template>
-    <div class="app">
+    <div :class="['app', isNight ? 'night' : '']">
         <left-menu />
         <div class="page">
             <transition :name="'slide-left'" mode="out-in">
@@ -7,19 +7,20 @@
                     <router-view />
                 </keep-alive>
             </transition>
-            <!-- <router-view /> -->
         </div>
     </div>
 </template>
 
 <script>
 import LeftMenu from 'components/LeftMenu';
+import {mapGetters} from 'vuex';
 export default {
     name: 'home-page',
     components: {
         LeftMenu
     },
     computed: {
+        ...mapGetters(['isNight']),
         transitionType() {
             const isListPage = this.$route.name === 'list-page';
             return isListPage ? 'slide-right' : 'slide-left';

@@ -1,16 +1,20 @@
 <template lang="html">
     <div class="article-page">
         <link rel="stylesheet" :href="css">
-        <div ref="body"></div>
+        <div v-show="isLoading">
+            加载中...
+        </div>
+        <div v-show="!isLoading"
+            :class="isNight ? 'night' : ''" ref="body"></div>
     </div>
 </template>
 
 <script>
 import {ipcRenderer} from 'electron';
+import {mapActions, mapGetters} from 'vuex';
 export default {
     data() {
         return {
-            body: '<span>hey</span>',
             css: ''
         };
     },
@@ -22,7 +26,14 @@ export default {
             this.initArticle();
         }
     },
+    computed: {
+        ...mapGetters(['isLoading'])
+    },
     methods: {
+        ...mapActions([
+            'startLoading',
+            'doneLoading'
+        ]),
         fetchArticle() {
             return new Promise(resolve => {
                 ipcRenderer.once('getArticle', (event, article) => {
@@ -33,6 +44,8 @@ export default {
         },
         initArticle() {
             if (this.$route.name === 'article-page') {
+                window.scrollTo(0, 0);
+                this.startLoading();
                 this.fetchArticle()
                     .then(article => {
                         const {body, css, title, image} = article;
@@ -55,8 +68,8 @@ export default {
                                 img.src = imgs.slice(1)[index].image;
                             });
                             this.$refs.body.innerHTML = articleRoot.innerHTML;
-                            // this.body = articleRoot;
                             this.css = css;
+                            this.doneLoading();
                         });
                         ipcRenderer.send('covertImgs', imgUrls);
                     });

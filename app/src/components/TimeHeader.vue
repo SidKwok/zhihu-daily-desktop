@@ -23,6 +23,11 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    .night .time-header {
+        .layer {
+            background-color: #444;
+        }
+    }
     .time-header {
         position: fixed;
         left: 0;

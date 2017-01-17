@@ -9,6 +9,10 @@ export const doneLoading = ({commit}) => {
     commit(types.DONE_LOADING);
 };
 
+export const toggleNight = ({commit}) => {
+    commit(types.TOGGLE_NIGHT);
+};
+
 export const fetchSlides = ({commit}) => {
     return new Promise(resolve => {
         ipcRenderer.once('getSlides', (event, stories) => {

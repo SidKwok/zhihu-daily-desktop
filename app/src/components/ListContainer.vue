@@ -55,6 +55,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    .night .list-container {
+        background-color: #343434;
+
+        .header {
+            background-color: #444;
+        }
+    }
     .list-container {
         min-height: 32px;
 

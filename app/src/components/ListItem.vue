@@ -37,6 +37,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    .night .list-item {
+        border-color: #444;
+
+        p {
+            color: #888;
+        }
+    }
     .list-item {
         height: 88px;
         border-bottom: 1px solid #ddd;
