@@ -1,5 +1,6 @@
 const axios = require('axios');
 const http = require('http');
+const https = require('https');
 axios.defaults.baseURL = 'http://news-at.zhihu.com/api';
 
 /**
@@ -12,7 +13,8 @@ function url2Base64 (data, key) {
     return data.map((e, i) => {
         let imgUrl = e[key] instanceof Array ? e[key][0] : e[key];
         return new Promise(resolve => {
-            http.get(imgUrl, res => {
+            const server = imgUrl.includes('http:') ? http : https;
+            server.get(imgUrl, res => {
                 let imgData = '';
                 res.setEncoding('base64')
                     .on('data', chunk => {
@@ -72,6 +74,24 @@ module.exports = function ({ipcMain}) {
             });
     });
 
+    ipcMain.on('fetchArticle', (event, id) => {
+        axios.get(`/4/news/${id}`)
+            .then(({data}) => {
+                event.sender.send('getArticle', data);
+            });
+    });
+
+    ipcMain.on('covertImgs', (event, imgs) => {
+        let imgsPromises = url2Base64(imgs, 'image');
+        Promise.all(imgsPromises)
+            .then(imgsPack => {
+                event.sender.send('getImgs', imgsPack);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
+
     ipcMain.on('cache', (event) => {
         const urls = [ 'http://pic3.zhimg.com/a2b5093857178de3c7d24bd898455b3a.jpg',
                     'http://pic2.zhimg.com/c627316d9cdcafcfd941733571840681.jpg',
@@ -93,8 +113,6 @@ module.exports = function ({ipcMain}) {
                 });
             });
         });
-
-        // console.log(urlPromises);
 
         Promise.all(urlPromises)
             .then(val => {
