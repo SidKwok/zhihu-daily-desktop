@@ -36,13 +36,6 @@ export default {
                 this.fetchArticle()
                     .then(article => {
                         const {body, css, title, image} = article;
-                        // const articleRoot = document.createElement('div');
-                        // article.innerHTML = body;
-                        // let imgUrls = Array
-                        //     .from(article.querySelector('.headline'))
-                        //     .map(e => {image: e.src});
-                        // imgUrls.unshift({image});
-                        // ipcRenderer.once('')
                         let imgUrls = body
                             .match(/<img.*?(?:>|\/>)/gi)
                             .map(e => ({image: e.match(/src=['"]?([^'"]*)['"]?/i)[1]}));
