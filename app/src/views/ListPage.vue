@@ -121,6 +121,6 @@ export default {
 
 <style lang="less" scoped>
     .list-page {
-        position: relative;
+        position: absolute;
     }
 </style>

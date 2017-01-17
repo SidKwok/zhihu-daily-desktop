@@ -2,11 +2,9 @@
     <div :class="['app', isNight ? 'night' : '']">
         <left-menu />
         <div class="page">
-            <transition :name="'slide-left'" mode="out-in">
-                <keep-alive>
-                    <router-view />
-                </keep-alive>
-            </transition>
+            <keep-alive>
+                <router-view />
+            </keep-alive>
         </div>
     </div>
 </template>
@@ -20,38 +18,21 @@ export default {
         LeftMenu
     },
     computed: {
-        ...mapGetters(['isNight']),
-        transitionType() {
-            const isListPage = this.$route.name === 'list-page';
-            return isListPage ? 'slide-right' : 'slide-left';
-        }
+        ...mapGetters(['isNight'])
     }
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
     .app {
         height: 100%;
     }
     .page {
         height: 100%;
         margin-left: 80px;
+        transition: .3s;
     }
-    /*.slide-left-enter-active,
-    .slide-left-leave-active {
-        transition: transform .3s;
+    .night .page {
+        background-color: #343434;
     }
-    .slide-left-enter,
-    .slide-left-leave-active {
-        transform: translateX(-100%);
-    }
-
-    .slide-right-enter-active,
-    .slide-right-leave-active {
-        transition: transform .3s;
-    }
-    .slide-right-enter,
-    .slide-right-leave-active {
-        transform: translateX(100%);
-    }*/
 </style>

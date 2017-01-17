@@ -64,6 +64,7 @@ export default {
     }
     .list-container {
         min-height: 32px;
+        transition: .3s;
 
         .header {
             height: 32px;
@@ -72,6 +73,7 @@ export default {
             font-size: 14px;
             background-color: #0F88EB;
             color: #fff;
+            transition: .3s;
         }
     }
 </style>

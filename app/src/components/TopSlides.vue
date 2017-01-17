@@ -61,6 +61,9 @@ export default {
 
 <style lang="less" scoped>
     @split-line: 1px solid #ddd;
+    .night .top-slides {
+        border-color: #444;
+    }
     .top-slides {
         width: 100%;
         height: 231px;

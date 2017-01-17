@@ -2,9 +2,18 @@
 
 > zhihu daily, desktop-version
 
+## Screenshots
+
+![gif](/screenshots/zhihu-daily-desktop.gif)
+
+## Features
+
+- **Night Mode**
+- **infinite scroll**
+
 ## Tech Stack
 
-- **Vuejs 2.0**
+- **Vuejs 2.x**
 - **Electron**
 - **electron-vue**
 - **Vuex**
@@ -13,9 +22,10 @@
 
 ## Goals
 
-- [ ] Routing
+- [x] Routing
 - [ ] 60fps animations(flip)
-- [ ] Night mode
+- [x] Night mode
+- [ ] Unit test
 
 ## Build Setup
 
@@ -28,12 +38,6 @@ npm run dev
 
 # build electron app for production
 npm run build
-
-# lint all JS/Vue component files in `app/src`
-npm run lint
-
-# run webpack in production
-npm run pack
 ```
 
 ## Reference

@@ -17,7 +17,7 @@
     "vuex:module": "node tasks/vuex/module.js",
     "postinstall": "npm run lint:fix && cd app && npm install"
   },
-  "author": "Greg Holguin <simulatedgreg@gmail.com>",
+  "author": "SidKwok <oceankwok@hotmail.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.8.0",

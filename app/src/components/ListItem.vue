@@ -50,11 +50,13 @@ export default {
         position: relative;
         padding: 12px 8px;
         cursor: pointer;
+        transition: .3s;
         p {
             font-size: 16px;
             color: #444;
             margin-right: 104px;
             height: 64px;
+            transition: .3s;
         }
 
         .img-box {

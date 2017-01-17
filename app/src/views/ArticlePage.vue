@@ -1,11 +1,8 @@
 <template lang="html">
     <div class="article-page">
         <link rel="stylesheet" :href="css">
-        <div v-show="isLoading">
-            加载中...
-        </div>
-        <div v-show="!isLoading"
-            :class="isNight ? 'night' : ''" ref="body"></div>
+        <div v-show="!isLoading" ref="body"
+            :class="isNight ? 'night' : ''"></div>
     </div>
 </template>
 
@@ -27,7 +24,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['isLoading'])
+        ...mapGetters([
+            'isLoading',
+            'isNight'
+        ])
     },
     methods: {
         ...mapActions([
@@ -44,7 +44,6 @@ export default {
         },
         initArticle() {
             if (this.$route.name === 'article-page') {
-                window.scrollTo(0, 0);
                 this.startLoading();
                 this.fetchArticle()
                     .then(article => {
@@ -80,6 +79,9 @@ export default {
 </script>
 
 <style lang="less">
+.article-page {
+    position: absolute;
+}
 .headline {
     height: 234px;
     position: relative;
@@ -120,5 +122,15 @@ export default {
         background-position: center;
         background-size: 100%;
     }
+}
+.headline,
+.img-wrap,
+.main-wrap,
+.question-title,
+.author,
+.bio,
+h1,
+p {
+    transition: .3s;
 }
 </style>
