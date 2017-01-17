@@ -9,7 +9,10 @@
                 {width: 1 / slides.length * 100 + '%'},
                 backgroundStyle(slide.image)]"
                 v-for="slide of slides">
-                <div class="gray-layer"></div>
+                <router-link tag="div"
+                    class="gray-layer"
+                    :to="{name: 'article-page', params: {id: slide.id}}"
+                    />
                 <p>{{slide.title}}</p>
             </li>
         </ul>
@@ -91,6 +94,7 @@ export default {
                     height: 100%;
                     background-color: #000;
                     opacity: .2;
+                    cursor: pointer;
                 }
 
                 p {
