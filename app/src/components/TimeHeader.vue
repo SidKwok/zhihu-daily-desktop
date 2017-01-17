@@ -33,7 +33,6 @@ export default {
         line-height: 36px;
         color: #fff;
         z-index: 999;
-        border-top: 1px solid #ddd;
 
         -webkit-user-select: none;
         -webkit-app-region: drag;
