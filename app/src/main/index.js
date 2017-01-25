@@ -3,8 +3,6 @@
 import electron from 'electron';
 import initApis from './apis';
 
-initApis(electron);
-
 let mainWindow;
 const { app, BrowserWindow } = electron;
 const winURL = process.env.NODE_ENV === 'development'
@@ -24,6 +22,8 @@ function createWindow() {
         minWidth: 400,
         titleBarStyle: 'hidden-inset'
     });
+
+    initApis(electron);
 
     mainWindow.loadURL(winURL);
 

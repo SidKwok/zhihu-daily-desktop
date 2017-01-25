@@ -94,10 +94,10 @@ module.exports = function ({ipcMain}) {
 
     ipcMain.on('cache', (event) => {
         const urls = [ 'http://pic3.zhimg.com/a2b5093857178de3c7d24bd898455b3a.jpg',
-                    'http://pic2.zhimg.com/c627316d9cdcafcfd941733571840681.jpg',
-                    'http://pic2.zhimg.com/8d672656c5dc06e0ad2efde2bc4bad31.jpg',
-                    'http://pic2.zhimg.com/0cd5e23e4c556a3a7c25f401bacdf865.jpg',
-                    'http://pic3.zhimg.com/558e51fde7055950ec20300471ad2cca.jpg' ];
+            'http://pic2.zhimg.com/c627316d9cdcafcfd941733571840681.jpg',
+            'http://pic2.zhimg.com/8d672656c5dc06e0ad2efde2bc4bad31.jpg',
+            'http://pic2.zhimg.com/0cd5e23e4c556a3a7c25f401bacdf865.jpg',
+            'http://pic3.zhimg.com/558e51fde7055950ec20300471ad2cca.jpg' ];
 
         const urlPromises = urls.map(url => {
             return new Promise(resolve => {
