@@ -9,7 +9,7 @@ axios.defaults.baseURL = 'http://news-at.zhihu.com/api';
  * @param {string} key, key of the url
  * @return {Array} every key should be a Promise
  */
-function url2Base64 (data, key) {
+function url2Base64(data, key) {
     return data.map((e, i) => {
         let imgUrl = e[key] instanceof Array ? e[key][0] : e[key];
         return new Promise(resolve => {
@@ -21,7 +21,7 @@ function url2Base64 (data, key) {
                         imgData += chunk;
                     })
                     .on('end', () => {
-                        e[key] = `data:image/jpg;base64,${imgData}`
+                        e[key] = `data:image/jpg;base64,${imgData}`;
                         resolve(e);
                     });
             });
@@ -33,7 +33,7 @@ module.exports = function ({ipcMain}) {
     ipcMain.on('fetchSlides', event => {
         axios.get('/4/news/latest')
             .then(({data}) => {
-                let stories = data.top_stories
+                let stories = data.top_stories;
                 let imgPromises = url2Base64(stories, 'image');
                 return Promise.all(imgPromises);
             })
@@ -45,7 +45,7 @@ module.exports = function ({ipcMain}) {
     ipcMain.on('fetchStories', (event, date) => {
         axios.get(`/4/news/before/${date}`)
             .then(({data}) => {
-                let stories = data.stories
+                let stories = data.stories;
                 let imgPromises = url2Base64(stories, 'images');
                 return Promise.all(imgPromises);
             })
@@ -57,7 +57,7 @@ module.exports = function ({ipcMain}) {
     ipcMain.on('updateNewest', event => {
         axios.get('/4/news/latest')
             .then(({data}) => {
-                let slides = data.top_stories
+                let slides = data.top_stories;
                 let stories = data.stories;
                 let slidesPromises = url2Base64(slides, 'image');
                 let storiesPromises = url2Base64(stories, 'images');
